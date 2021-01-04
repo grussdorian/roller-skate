@@ -1,16 +1,28 @@
 {
   "name": "roller-skate",
   "version": "1.0.0",
-  "description": "",
+  "description": "backend service for chrome extension",
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify index.js -o bundle.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://https://github.com/grussdorian/roller-skate"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "selenium"
+  ],
+  "author": "Hardik Ghoshal",
+  "license": "CC",
+  "bugs":{
+    "email": "techtipsjg@gmail.com"
+  },
+  "homepage": "https://github.com/grussdorian/roller-skate",
   "dependencies": {
     "browserify": "^17.0.0",
     "dotenv": "^8.2.0",
