@@ -1,28 +1,23 @@
 require('dotenv').config()
 const express = require('express');
+const cors = require('cors');
 const scrapper = require('./driver-code');
 // const initialize = require('./init');
-const firefox = require('selenium-webdriver/firefox');
-const {Builder,By,Key,util} = require("selenium-webdriver");
-const screen = {
-    width: 640,
-    height: 480
-  };
-  const app = express()
-  const port = process.env.PORT || 2021;
-// let driver = new Builder().forBrowser("firefox").setFirefoxOptions(new firefox.Options()
-//     // .headless()
-//     .windowSize(screen))
-//     .build();
-driver = 'foo';
+
+const app = express();
+app.use(cors());
+
+const port = process.env.PORT || 2021;
 app.get('/',(req,res)=>{
-    scrapper(driver,By,req.query.url,(error,result)=>{
+    scrapper(req.query.url,(error,result)=>{
         if(error){
             return res.send({error:error})
         }
-        return res.send({
-            result:result
-        })
+        // return res.json({res:"test"});
+        return res.send(result);
+        // return res.send({
+        //     result:result
+        // })
     });
 })
 app.listen(port,()=>{

@@ -1,8 +1,7 @@
 // alert("working");
 chrome.runtime.onMessage.addListener(function (request,sender,sendResponse) {
-  const re = new RegExp('ring', 'gi')
-  var matches = document.documentElement.innerHTML.match(re)
-  sendResponse({count: matches.length})
+  link = document.location.href;
+  sendResponse({curUrl: link});
   //alert(request)
 })
 

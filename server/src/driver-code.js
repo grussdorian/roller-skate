@@ -10,7 +10,7 @@ const scrapeData = ()=>{
     sizes[0] = document.title;
     return sizes;
     }
-const scrapper = async (driver1,By,url,callback)=>{
+const scrapper = async (url,callback)=>{
     try{
 
         let driver = new Builder().forBrowser("firefox").setFirefoxOptions(new firefox.Options()
@@ -30,7 +30,8 @@ const scrapper = async (driver1,By,url,callback)=>{
             });
             // res.send(returnValue);
             await driver.close();
-            callback(undefined,returnValue);
+            var res = {data:returnValue};
+            callback(undefined,res);
         });
     }
     catch(err){

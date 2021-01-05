@@ -6,15 +6,14 @@ document.addEventListener('DOMContentLoaded', function () {
     //   div.textContent = `${url}: ${bg.bears[url]}`
     //   document.body.appendChild(div)
     // })
-  
-    document.querySelector('button').addEventListener('click', onclick, false)
-    
-    function onclick () {
+
+    const onclick =  ()=> {
       chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, 'hi',setCount)
       })
     }
-    
+    document.querySelector('button').addEventListener('click', onclick, false)
+
     function setCount (res) {
       alert(res)
       const div = document.createElement('div')
