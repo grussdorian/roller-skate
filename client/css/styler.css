@@ -1,0 +1,8 @@
+#extensionTrackingButton{
+    background-color: #d9d7d4;
+    border-radius: 2px;
+}
+#extensionTrackingButton:hover {
+    background-color: #222222;
+    color: white;
+  }

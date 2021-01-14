@@ -2,14 +2,20 @@
 	"name":"roller-skate",
 	"version": "1.0",
 	"manifest_version":2,
+	"permissions": ["storage"],
+	"background":{
+		"scripts":["js/background.js"],
+		"persistent": true
+	},
 	"content_scripts":[
 		{
-		"matches":["<all_urls>"],
-		"js":["content.js"]
+		"matches":["https://www2.hm.com/*/productpage.*.html"],
+		"js":["js/content.js"],
+		"css":["css/styler.css"]
 		}
 	],
 	"browser_action": {
-		"default_popup":"popup.html",
-		"default_title":"Cart"
+		"default_popup":"html/popup.html",
+		"default_title":"Roller-Skate"
 	}
 }

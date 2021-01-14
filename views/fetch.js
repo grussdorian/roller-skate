@@ -1,0 +1,1 @@
+fetch('localhost:3000?url=https://www2.hm.com/en_in/productpage.0883730001.html')
