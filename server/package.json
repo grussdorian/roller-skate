@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify index.js -o bundle.js"
+    "build": "nexe"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "selenium-webdriver": "^4.0.0-alpha.8"
   },
   "devDependencies": {
+    "nexe": "^4.0.0-beta.16",
     "nodemon": "^2.0.6"
   }
 }

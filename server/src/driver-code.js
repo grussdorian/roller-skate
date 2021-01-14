@@ -1,8 +1,8 @@
 const firefox = require('selenium-webdriver/firefox');
 const {Builder,By,Key,util} = require("selenium-webdriver");
 const screen = {
-    width: 640,
-    height: 480
+    width: 1280,
+    height: 720
   };
 const scrapeData = ()=>{
     var sizes = [];
@@ -22,11 +22,17 @@ const scrapper = async (url,callback)=>{
         await driver.executeScript(scrapeData).then(async function (returnValue){
             console.log("Return value of scrapeData ->" + returnValue);
             await driver.findElement(By.xpath(path)).getText().then((text)=>{
+                console.log(text);
                 text = text.replace(/,/g, ''); 
                 var myRe = /([\d]*\B\d)/;
                 text = myRe.exec(text)[0];
                 console.log(text);
                 returnValue[1] = text; 
+            }).catch(async (err)=>{
+                await driver.close();
+                console.log(err);
+                // res.send(err);
+                callback(err,undefined);
             });
             // res.send(returnValue);
             await driver.close();
