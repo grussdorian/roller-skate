@@ -2,11 +2,11 @@
   "name": "roller-skate",
   "version": "1.0.0",
   "description": "backend service for chrome extension",
-  "main": "src/index.js",
+  "main": "src/app.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "nexe"
+    "build":"nexe"
   },
   "repository": {
     "type": "git",
@@ -14,8 +14,7 @@
   },
   "keywords": [
     "node",
-    "express",
-    "selenium"
+    "express"
   ],
   "author": "Hardik Ghoshal",
   "license": "ISC",
@@ -27,6 +26,8 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "puppeteer": "^5.5.0",
+    "puppeteer-firefox": "^0.5.0"
   },
   "devDependencies": {
     "nexe": "^4.0.0-beta.16",

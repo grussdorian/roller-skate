@@ -1,8 +1,79 @@
-#extensionTrackingButton{
-    background-color: #d9d7d4;
-    border-radius: 2px;
+/* #extensionTrackingButton {
+	background-color: #d9d7d4;
+	border-radius: 2px;
 }
 #extensionTrackingButton:hover {
-    background-color: #222222;
-    color: white;
-  }
+	background-color: #222222;
+	color: white;
+} */
+
+@font-face {
+	font-family: 'HM Ampersand Regular';
+	src: url('HMAmpersand.eot');
+	src: url('HMAmpersand.eot?#iefix') format('embedded-opentype'), url('HMAmpersand.woff') format('woff'),
+		url('HMAmpersand.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+.extensionInjectedButtons {
+	font-family: 'HM Sans Regular';
+	border: 2px solid black;
+	background-color: white;
+	color: #222222;
+	/* padding: 14px 28px; */
+	font-size: 16px;
+	cursor: pointer;
+	transition: 0.3s;
+	border-radius: 12px;
+}
+#extensionTrackingButton {
+	box-shadow: 0 2px 4px 0 rgba(190, 67, 67, 0.2), 0 3px 10px 0 rgba(190, 67, 67, 0.2);
+	width: 120px;
+	height: 30px;
+	display: block;
+	/* font-family: 'HM Ampersand Regular'; */
+	border-color: #cc071e;
+	color: red;
+	border-radius: 4px;
+}
+#extensionTrackingButton:visited {
+	box-shadow: 0 2px 4px 0 rgba(20, 114, 7, 0.2), 0 3px 10px 0 rgba(20, 114, 7, 0.2);
+	background: #1ecc07;
+	color: white;
+	border-color: #1ecc07;
+}
+#extensionTrackingButton:focus {
+	box-shadow: 0 2px 4px 0 rgba(30, 204, 7, 0.2), 0 3px 10px 0 rgba(30, 204, 7, 0.2);
+	background: #1ecc07;
+	color: white;
+	border-color: #1ecc07;
+}
+#extensionTrackingButton:hover {
+	box-shadow: 0 2px 4px 0 rgba(124, 38, 38, 0.2), 0 3px 10px 0 rgba(124, 38, 38, 0.2);
+	background: #cc071e;
+	border-color: #cc071e;
+	color: white;
+}
+#extensionTrackingButton:active {
+	box-shadow: 0 2px 4px 0 rgba(20, 114, 7, 0.2), 0 3px 10px 0 rgba(20, 114, 7, 0.2);
+	background: #1ecc07;
+	color: white;
+	border-color: #1ecc07;
+}
+
+#buttonClicked {
+	font-size: 16px;
+	background: #1ecc07;
+	border-color: #1ecc07;
+	box-shadow: 0 2px 4px 0 rgba(20, 114, 7, 0.2), 0 3px 10px 0 rgba(20, 114, 7, 0.2);
+	width: 120px;
+	height: 30px;
+	display: block;
+	/* font-family: 'HM Ampersand Regular'; */
+	color: white;
+	border-radius: 4px;
+}
+
+p {
+	font-family: 'HM Ampersand Regular';
+}
