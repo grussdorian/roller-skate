@@ -6,7 +6,8 @@ var url = document.location.href;
 trackButton.id = "extensionTrackingButton";
 trackButton.className = "extensionInjectedButtons";
 trackButton.textContent = 'Track Product';
-if (localStorage.getItem(url) == 'visited') {
+var status = localStorage.getItem(url);
+if (status === 'visited') {
   trackButton.style.background = "#1ecc07";
   trackButton.style.borderColor = "#1ecc07";
   trackButton.style.color = "white";
@@ -32,7 +33,11 @@ var convertImgToDataURLviaCanvas = function(url, callback) {
     };
     img.src = url;
   }
-let sendMessageToBackground =()=>{
+let sendMessageToBackground = () => {
+  if (status === 'visited') {
+    console.log('already tracking');
+    return;
+  };
   var imgSrc = document.getElementsByClassName('product-detail-main-image-container')[0].children[0].src
   convertImgToDataURLviaCanvas(imgSrc, function (base64_data) {
     var productId = document.getElementById('product-price')
@@ -59,7 +64,7 @@ let sendMessageToBackground =()=>{
       // chrome.runtime.sendMessage(id, { product: product_info }, function (response) {
       // console.log(`DONE! ${response}`);
       // })
-        chrome.runtime.sendMessage({product:product_info}, function(response) {
+        chrome.runtime.sendMessage(product_info, function(response) {
           console.log("Response: ", response);
           localStorage.setItem(url, "visited");
           trackButton.className = "buttonClicked";

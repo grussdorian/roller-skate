@@ -1,13 +1,11 @@
-// chrome.runtime.onMessageExternal.addListener(function (req, sender, res) {
-//     console.log("got here");
-//     if (req.product) {
-//         console.log(req.product);
-//    } 
-// });
-var url = 'http://localhost:5050/?url=';
+// chrome.storage.sync.QUOTA_BYTES = 104857600000
+// chrome.storage.sync.QUOTA_BYTES_PER_ITEM = 104857600000
+var counter = localStorage.getItem('counter')||0;
+console.log(counter)
+var local_domain = 'http://localhost:5050/?url=';
 const fetchData = (url) => {
     fetch(url)
-  .then(
+   .then(
     function(response) {
       if (response.status !== 200) {
         console.log('Looks like there was a problem. Status Code: ' +
@@ -26,13 +24,17 @@ const fetchData = (url) => {
   });
 }
 
-chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
-    console.log("Received %o from %o, frame", msg, sender.tab, sender.frameId);
-    url = url + msg.product.url;
-    console.log(`message.url -> ${msg.product.url} url -> ${url} `);
-    fetchData(url);
-    item = JSON.stringify(msg);
-    localStorage.setItem('product1', item);
+chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+    localStorage.setItem('counter', ++counter);
+    // console.log("Received %o from %o, frame", msg, sender.tab, sender.frameId);
+    var product_url = local_domain + msg.url;
+    fetchData(product_url);
+    // localStorage.setItem(msg.product.url, item);
+    var item = {};
+    item[counter] = msg;
+    // console.log(`counter -> ${counter} item -> ${item} `);
+    chrome.storage.local.set(item, function() {
+        // console.log(`Data is set key:${counter} value:${msg}`); 
+      });      
     sendResponse("Gotcha!");
 });
-

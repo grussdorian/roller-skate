@@ -29,8 +29,6 @@ const scraper = async (browser,url,callback)=>{
         price = myRe.exec(price)[0];
         sizes.shift();
         sizes[0] = price;
-        // console.log(price);
-        // console.log(sizes);
 		await page.goto('about:blank');
         await page.close();
 		callback(undefined,sizes);
@@ -71,6 +69,9 @@ app.get('/', async (req, res) => {
         }
         var Price = result[0];
         result.shift();
+        if (result.length === 0) {
+            result[0] = 'Out of stock'
+        }
         return res.status(200).send({
             price: Price,
             sizes: result

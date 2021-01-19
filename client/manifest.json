@@ -2,7 +2,10 @@
 	"name":"roller-skate",
 	"version": "1.0",
 	"manifest_version":2,
-	"permissions": ["storage"],
+	"permissions": [
+		"storage",
+		"unlimitedStorage"
+	],
 	"background":{
 		"scripts":["js/background.js"],
 		"persistent": true
