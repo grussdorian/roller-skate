@@ -6,35 +6,40 @@ var url = document.location.href;
 trackButton.id = "extensionTrackingButton";
 trackButton.className = "extensionInjectedButtons";
 trackButton.textContent = 'Track Product';
-var status = localStorage.getItem(url);
-if (status === 'visited') {
-  trackButton.style.background = "#1ecc07";
-  trackButton.style.borderColor = "#1ecc07";
-  trackButton.style.color = "white";
-  
+const convertImgToDataURLviaCanvas = function(url, callback) {
+  var img = new Image();
+  img.crossOrigin = 'Anonymous';
+  img.onload = function() {
+    var canvas = document.createElement('CANVAS');
+    var ctx = canvas.getContext('2d');
+    var dataURL;
+    canvas.height = this.height;
+    canvas.width = this.width;
+    ctx.drawImage(this, 0, 0);
+    dataURL = canvas.toDataURL();
+    callback(dataURL);
+    canvas = null;
+  };
+  img.src = url;
 }
+var state = false;
+chrome.runtime.sendMessage({ url_to_check: url }, function (res) {
+  console.log(`status is ${res}`);
+  if (res === 'tracked') {
+    trackButton.style.background = "#1ecc07";
+    trackButton.style.borderColor = "#1ecc07";
+    trackButton.style.color = "white";
+  }
+  state = res;
+});
+
+
 topList.appendChild(trackButton);
-var imgData = "not yet loaded";
+// var imgData = "not yet loaded";
 // var mygroup = document.getElementsByClassName('group')[0];
 // var imgSrc = mygroup.children[0].children[0].children[0].src;
-var convertImgToDataURLviaCanvas = function(url, callback) {
-    var img = new Image();
-    img.crossOrigin = 'Anonymous';
-    img.onload = function() {
-      var canvas = document.createElement('CANVAS');
-      var ctx = canvas.getContext('2d');
-      var dataURL;
-      canvas.height = this.height;
-      canvas.width = this.width;
-      ctx.drawImage(this, 0, 0);
-      dataURL = canvas.toDataURL();
-      callback(dataURL);
-      canvas = null;
-    };
-    img.src = url;
-  }
 let sendMessageToBackground = () => {
-  if (status === 'visited') {
+  if (state === 'tracked') {
     console.log('already tracking');
     return;
   };
@@ -51,13 +56,15 @@ let sendMessageToBackground = () => {
       sizes[0] = "Not applicable"
     }
     // var sizes = document.getElementsByClassName('value').innerText;
+    var timestamp = new Date().getTime();
     var price = productId.children[0].children[0].textContent;
     var product_info = {
         url: url,
         title: name,
         img: base64_data,
         curr_price: price,
-        sizes_available: sizes
+        sizes_available: sizes,
+        time: timestamp
     }
       // product_info = JSON.stringify(product_info);
       // console.log(product_info);
@@ -66,12 +73,14 @@ let sendMessageToBackground = () => {
       // })
         chrome.runtime.sendMessage(product_info, function(response) {
           console.log("Response: ", response);
-          localStorage.setItem(url, "visited");
-          trackButton.className = "buttonClicked";
-          trackButton.style.background = "#1ecc07";
-          trackButton.style.borderColor = "1ecc07";
-          trackButton.style.fontSize = "16px";
-          trackButton.style.color = "white";
+          if (response) {
+            trackButton.className = "buttonClicked";
+            trackButton.style.background = "#1ecc07";
+            trackButton.style.borderColor = "1ecc07";
+            trackButton.style.fontSize = "16px";
+            trackButton.style.color = "white";
+          }
+          else console.log(`something went wrong`);
       });
     });
 }

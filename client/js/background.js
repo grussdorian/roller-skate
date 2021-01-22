@@ -1,7 +1,4 @@
-// chrome.storage.sync.QUOTA_BYTES = 104857600000
-// chrome.storage.sync.QUOTA_BYTES_PER_ITEM = 104857600000
-var counter = localStorage.getItem('counter')||0;
-console.log(counter)
+var urlList = Object.keys(localStorage);
 var local_domain = 'http://localhost:5050/?url=';
 
 function fetchData(url) {
@@ -12,13 +9,13 @@ function fetchData(url) {
        if (response.status !== 200) {
          console.log('Looks like there was a problem. Status Code: ' +
            response.status);
-        //  return;
+
          reject('something wrong happened');
        }
  
        // Examine the text in the response
        response.json().then(function(data) {
-         console.log(data);
+        //  console.log(data);
          resolve(data);
          // chrome.storage.local.get()
        });
@@ -32,71 +29,58 @@ function fetchData(url) {
 }
 
 
-// const fetchData = (url) => {
-//     fetch(url)
-//    .then(
-//     function(response) {
-//       if (response.status !== 200) {
-//         console.log('Looks like there was a problem. Status Code: ' +
-//           response.status);
-//         return;
-//       }
-
-//       // Examine the text in the response
-//       response.json().then(function(data) {
-//         console.log(data);
-//         return data;
-//         // chrome.storage.local.get()
-//       });
-//     }
-//   )
-//   .catch(function(err) {
-//     console.log('Fetch Error :-S', err);
-//   });
-// }
-
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-    localStorage.setItem('counter', ++counter);
-    // console.log("Received %o from %o, frame", msg, sender.tab, sender.frameId);
-    var product_url = local_domain + msg.url;
-    // fetchData(product_url);
-    // localStorage.setItem(msg.product.url, item);
-    var item = {};
-    item[counter] = msg;
-    // console.log(`counter -> ${counter} item -> ${item} `);
-    chrome.storage.local.set(item, function() {
-        // console.log(`Data is set key:${counter} value:${msg}`); 
-      });      
-    sendResponse("Gotcha!");
+    // console.log(msg);
+  if (msg.url_to_check) {
+    // console.log(`got here url_to_check = ${msg.url_to_check}`);
+    var state = localStorage.getItem(msg.url_to_check)
+      // console.log(state);
+        if (state) {
+          return sendResponse('tracked');
+        } else {
+          localStorage.setItem(msg.url_to_check,'tracked')
+          return sendResponse('not tracked');
+        }
+    } else {
+      var item = {};
+      var key = msg.url;
+      item[key] = msg;
+      chrome.storage.local.set(item, function () {
+      });
+      urlList = Object.keys(localStorage);
+      return sendResponse("Gotcha!");
+    }    
 });
-console.log(`counter = ${counter}`);
+
 
 const toDo = (i) => {
-  console.log(` i = ${i}`);
+  // console.log(` i = ${i}`);
   chrome.storage.local.get(i, async function (product) {
     try {
-      console.log(`product => ${product[i].url}`);
+      // console.log(`product.url => ${product[i].url}`);
       product = product[i];
+      var key = i
+      // console.log(`key = ${key}`)
       var product_url = local_domain + product.url;
       product_info = await fetchData(product_url);  
       product.curr_price = await product_info.price;
       product.sizes_available = await product_info.sizes;
       var item = {};
-      item[i] = await product;
+      item[key] = await product;
+      // console.log(item);
       await chrome.storage.local.set(item, function (){
-        console.log(`modified value`);
+        // console.log(`modified value ${item}`);
       })
     } catch (err){
-      console.log(`error occured ${err}`);
+      // console.log(`error occured ${err}`);
     }
   });
 }
 var i = 0;
 setInterval(() => {
-  i = (i + 1) % counter;
-  i = i+ ''
-  toDo(i);
-  i = parseInt(i, 10);
- },7000)
+  toDo(urlList[i]);
+  i = (i + 1) % urlList.length;
+ },30000)
 
 // setInterval(toDo, 7000);
+// console.log(`urlList = ${urlList}`);

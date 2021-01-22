@@ -6,14 +6,23 @@
 	background-color: #222222;
 	color: white;
 } */
+html {
+	width: 400px;
+	height: 600px;
+	background: #e5e5e5;
+}
 body {
 	font-family: 'HM Ampersand Regular';
-	width: 400;
+	/* width: 400px;
+	height: 600px; */
+	margin: 0px;
+	margin-bottom: 10px;
+	/* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
 }
-.product-image {
+/* .product-image {
 	height: 150;
 	width: 100;
-}
+} */
 @font-face {
 	font-family: 'HM Ampersand Regular';
 	src: url('HMAmpersand.eot');
@@ -22,61 +31,467 @@ body {
 	font-weight: normal;
 	font-style: normal;
 }
-.extensionInjectedButtons {
-	font-family: 'HM Sans Regular';
-	border: 2px solid black;
-	background-color: white;
-	color: #222222;
-	/* padding: 14px 28px; */
-	font-size: 16px;
-	cursor: pointer;
-	transition: 0.3s;
-	border-radius: 12px;
-}
-#extensionTrackingButton {
-	box-shadow: 0 2px 4px 0 rgba(190, 67, 67, 0.2), 0 3px 10px 0 rgba(190, 67, 67, 0.2);
-	width: 120px;
-	height: 30px;
-	display: block;
-	/* font-family: 'HM Ampersand Regular'; */
-	border-color: #cc071e;
-	color: red;
-	border-radius: 4px;
-}
-#extensionTrackingButton:visited {
-	box-shadow: 0 2px 4px 0 rgba(20, 114, 7, 0.2), 0 3px 10px 0 rgba(20, 114, 7, 0.2);
-	background: #1ecc07;
+/* Cart */
+.spacer {
+	height: 50px;
+	width: 400px;
+	text-align: center;
+	font-size: 32px;
+	line-height: 37px;
+	font-family: 'HM Ampersand Regular';
+	background-color: black;
 	color: white;
-	border-color: #1ecc07;
-}
-#extensionTrackingButton:focus {
-	box-shadow: 0 2px 4px 0 rgba(30, 204, 7, 0.2), 0 3px 10px 0 rgba(30, 204, 7, 0.2);
-	background: #1ecc07;
-	color: white;
-	border-color: #1ecc07;
-}
-#extensionTrackingButton:hover {
-	box-shadow: 0 2px 4px 0 rgba(124, 38, 38, 0.2), 0 3px 10px 0 rgba(124, 38, 38, 0.2);
-	background: #cc071e;
-	border-color: #cc071e;
-	color: white;
-}
-#extensionTrackingButton:active {
-	box-shadow: 0 2px 4px 0 rgba(20, 114, 7, 0.2), 0 3px 10px 0 rgba(20, 114, 7, 0.2);
-	background: #1ecc07;
-	color: white;
-	border-color: #1ecc07;
 }
 
-#buttonClicked {
-	font-size: 16px;
-	background: #1ecc07;
-	border-color: #1ecc07;
-	box-shadow: 0 2px 4px 0 rgba(20, 114, 7, 0.2), 0 3px 10px 0 rgba(20, 114, 7, 0.2);
+@keyframes placeholderShimmer {
+	0% {
+		background-position: -468px 0;
+	}
+
+	100% {
+		background-position: 468px 0;
+	}
+}
+
+/* Header */
+#header {
+	font-family: 'HM Ampersand Regular';
+	color: #cc071e;
+	position: absolute;
+	display: flex;
+	padding-left: 10px;
+	/* margin-bottom: 50px; */
+	width: 400px;
+	height: 46px;
+	left: 0px;
+	top: 0px;
+	background: #ffffff;
+	/* font-size: 36px; */
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	font-style: normal;
+	font-size: 32px;
+	line-height: 37px;
+}
+
+/* Cart */
+#cart {
+	position: absolute;
+	/* width: 400px;
+	height: 38px; */
+	/* left: 36px; */
+	/* top: 2px; */
+	/* padding-left: 50%; */
+	font-family: 'HM Ampersand Regular';
+	font-style: normal;
+	font-size: 32px;
+	line-height: 37px;
+	/* left: 35%; */
+	color: #cc071e;
+}
+
+/* Card */
+.card {
+	/* position: absolute;
+	align-items: center;
+	text-align: center;*/
+	margin-bottom: 5%;
+	/* right: 2%; */
+	/* top: 14.83%; */
+	/* bottom: 1%; */
+}
+
+/* Card-Outer */
+.card-outer {
+	position: relative;
+	left: 1.8%;
+	/* right: 0%; */
+	top: 8%;
+	bottom: 0%;
+	margin-top: 20px;
+	height: 217px;
+	width: 384px;
+	background: #ffffff;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 3.97917px 3.97917px rgba(0, 0, 0, 0.25);
+	border-radius: 8px;
+	/* position: absolute; */
+	align-items: center;
+	text-align: center;
+}
+
+/* Card-Inner */
+.card-inner {
+	position: relative;
+	left: 3.12%;
+	right: 4.17%;
+	top: 9.22%;
+	bottom: 7.83%;
+	height: 185px;
+	width: 356px;
+}
+
+/* Img  */
+.product-image {
+	position: absolute;
+	left: 0%;
+	right: 66.29%;
+	top: 0%;
+	bottom: 0%;
+	/* background: url(download.png); */
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)), drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	border-radius: 8px;
 	width: 120px;
-	height: 30px;
-	display: block;
-	/* font-family: 'HM Ampersand Regular'; */
-	color: white;
+	height: 180px;
+}
+
+/* Info */
+.info {
+	position: absolute;
+	left: 45%;
+	right: 0%;
+	top: 0%;
+	bottom: 0.56%;
+}
+/* Rs. 1,299 */
+.price {
+	position: absolute;
+	left: 0%;
+	right: 67.05%;
+	top: 17.32%;
+	bottom: 73.74%;
+
+	font-family: 'HM Ampersand Regular';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+
+	color: #000000;
+
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+/* Sizes Available */
+.sizes {
+	position: absolute;
+	left: 0%;
+	right: 47.16%;
+	top: 32.96%;
+	bottom: 58.1%;
+
+	font-family: 'HM Ampersand Regular';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+
+	color: #000000;
+
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+/* Quilted shoulder bag */
+.title {
+	position: absolute;
+	left: 0%;
+	right: 26.7%;
+	top: 0%;
+	bottom: 91.06%;
+
+	font-family: 'HM Ampersand Regular';
+	font-weight: bold;
+	font-style: normal;
+	font-size: 14px;
+	line-height: 16px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+
+	color: #000000;
+
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+/* Select size to track */
+.size-to-track {
+	position: absolute;
+	left: 0%;
+	right: 32.39%;
+	top: 81%;
+	bottom: 20.67%;
+
+	font-family: 'HM Ampersand Regular';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+
+	color: #000000;
+
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+/* Open Product */
+.open-product-button {
+	position: absolute;
+	left: 0%;
+	right: 30%;
+	top: 90%;
+	bottom: 0%;
+}
+/* Rectangle 4 */
+.open-product-button-outer {
+	height: 20px;
+	width: 56px;
+	position: absolute;
+	left: 0%;
+	right: 0%;
+	top: 0%;
+	bottom: 0%;
+
+	background: #cc071e;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 5px;
+}
+/* Open Product */
+.open-product {
+	position: absolute;
+	left: 18.98%;
+	right: 18.25%;
+	top: 10%;
+	bottom: 10%;
+
+	font-family: 'HM Ampersand Regular';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+
+	color: #ffffff;
+}
+/* Sizes available */
+.sizes-available {
+	position: absolute;
+	left: 0%;
+	right: 2.27%;
+	top: 48.6%;
+	bottom: 39.11%;
+}
+/* Rectangle 6 */
+.sizes-available-background {
+	position: relative;
+	left: 0%;
+	right: 0%;
+	top: 47%;
+	bottom: 0%;
+	height: 45px;
+	background: #e4e3e1;
+	border-radius: 3px;
+	align-items: center;
+}
+/* XS, S, M, L, XL */
+.sizes-available-text {
+	position: relative;
+	left: 1.74%;
+	right: 47.67%;
+	top: 13.64%;
+	bottom: 13.64%;
+
+	font-family: 'HM Ampersand Regular';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	color: #000000;
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+/* Tracked Size */
+
+.tracked-size {
+	cursor: pointer;
+	position: relative;
+	left: 74%;
+	right: 0%;
+	top: 51.5%;
+	bottom: 20.67%;
+}
+/* Rectangle 5 */
+.tracked-size-button {
+	position: absolute;
+	left: 0%;
+	right: 0%;
+	top: 0%;
+	bottom: 0%;
+	height: 20px;
+	width: 50px;
+	background: #000000;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 4px;
+}
+/* M */
+/* TO DO */
+.tracked-size-text {
+	position: absolute;
+	left: 38.5%;
+	right: 33.33%;
+	top: 0%;
+	bottom: 0%;
+	font-family: 'HM Ampersand Regular';
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+
+	color: #ffffff;
+}
+/* Remove Product */
+.remove-product-button {
+	cursor: pointer;
+	position: absolute;
+	left: 90.91%;
+	right: 0%;
+	top: 0%;
+	bottom: 91.06%;
+}
+.product-image-loading {
+	background: #f6f7f8;
+	background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+	background-repeat: no-repeat;
+	background-size: 800px 200px;
+	display: inline-block;
+	/* position: relative; */
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeholderShimmer;
+	animation-timing-function: linear;
+
+	position: absolute;
+	left: 0%;
+	right: 66.29%;
+	top: 0%;
+	bottom: 0%;
+	width: 120px;
+	height: 180px;
+	border-radius: 8px;
+	border: none;
+}
+.title-loading {
+	background: #f6f7f8;
+	background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+	background-repeat: no-repeat;
+	background-size: 800px 200px;
+	display: inline-block;
+	/* position: relative; */
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeholderShimmer;
+	animation-timing-function: linear;
+
+	position: absolute;
+	left: 0%;
+	right: 26.7%;
+	top: 0%;
+	bottom: 91.06%;
+	border-radius: 5px;
+}
+.price-loading {
+	background: #f6f7f8;
+	background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+	background-repeat: no-repeat;
+	background-size: 800px 200px;
+	display: inline-block;
+	/* position: relative; */
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeholderShimmer;
+	animation-timing-function: linear;
+
+	position: absolute;
+	left: 0%;
+	right: 67.05%;
+	top: 17.32%;
+	bottom: 73.74%;
+	border-radius: 3px;
+}
+.sizes-loading {
+	background: #f6f7f8;
+	background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+	background-repeat: no-repeat;
+	background-size: 800px 200px;
+	display: inline-block;
+	/* position: relative; */
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeholderShimmer;
+	animation-timing-function: linear;
+
+	position: absolute;
+	left: 0%;
+	right: 47.16%;
+	top: 32.96%;
+	bottom: 58.1%;
+	border-radius: 2px;
+}
+
+.dummy-box-1 {
+	height: 40px;
+	width: 150px;
+	background: #f6f7f8;
+	background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+	background-repeat: no-repeat;
+	background-size: 800px 200px;
+	display: inline-block;
+
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeholderShimmer;
+	animation-timing-function: linear;
+
+	position: absolute;
+	left: 0%;
+	right: 47.16%;
+	top: 50%;
+	bottom: 58.1%;
+	border-radius: 5px;
+}
+
+.dummy-box-2 {
+	height: 20px;
+	width: 80px;
+	background: #f6f7f8;
+	background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+	background-repeat: no-repeat;
+	background-size: 800px 200px;
+	display: inline-block;
+
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeholderShimmer;
+	animation-timing-function: linear;
+
+	position: absolute;
+	left: 0%;
+	right: 47.16%;
+	top: 80%;
+	bottom: 58.1%;
+	border-radius: 5px;
 }
