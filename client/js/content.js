@@ -1,4 +1,4 @@
-// alert("working");
+var state = undefined;
 const id = "dfjjhpfkphenkadfomhmckmckioghjgn";
 var topList = document.getElementsByClassName('menu__session')[0];
 var trackButton = document.createElement('button');
@@ -22,19 +22,36 @@ const convertImgToDataURLviaCanvas = function(url, callback) {
   };
   img.src = url;
 }
-var state = false;
-chrome.runtime.sendMessage({ url_to_check: url }, function (res) {
-  console.log(`status is ${res}`);
-  if (res === 'tracked') {
+
+// function sendPromiseMessage() {
+//   return new Promise((resolve, reject) => {
+//     chrome.runtime.sendMessage({ url_to_check: url }, function (res) {
+//     console.log(`state is ${res}`);
+//     if (res === 'tracked') {
+//       trackButton.style.background = "#1ecc07";
+//       trackButton.style.borderColor = "#1ecc07";
+//       trackButton.style.color = "white";
+//     }
+//     state = res;
+//     })
+//   })
+// }
+chrome.runtime.onMessage.addListener(function (request) {
+  if (request.message === 'tracked') {
     trackButton.style.background = "#1ecc07";
     trackButton.style.borderColor = "#1ecc07";
     trackButton.style.color = "white";
   }
-  state = res;
+  state = request.message;
 });
 
+chrome.runtime.sendMessage({ url_to_check: url });
 
-topList.appendChild(trackButton);
+// chrome.runtime.sendMessage({ url_to_check: 'test' }, function (res) {
+//   console.log(`state is ${res}`);
+// });
+
+
 // var imgData = "not yet loaded";
 // var mygroup = document.getElementsByClassName('group')[0];
 // var imgSrc = mygroup.children[0].children[0].children[0].src;
@@ -48,6 +65,7 @@ let sendMessageToBackground = () => {
     var productId = document.getElementById('product-price')
     var number_of_sizes = document.getElementsByClassName('picker-list')[0].childElementCount;
     var name = document.getElementsByClassName('primary product-item-headline')[0].innerText
+    var price = productId.children[0].children[0].textContent;
     var sizes = []
     for (i = 1; i < number_of_sizes-1; i = i + 1){
       sizes[i - 1] = document.getElementsByClassName('picker-list')[0].children[i].innerText;
@@ -57,7 +75,6 @@ let sendMessageToBackground = () => {
     }
     // var sizes = document.getElementsByClassName('value').innerText;
     var timestamp = new Date().getTime();
-    var price = productId.children[0].children[0].textContent;
     var product_info = {
         url: url,
         title: name,
@@ -73,30 +90,17 @@ let sendMessageToBackground = () => {
       // })
         chrome.runtime.sendMessage(product_info, function(response) {
           console.log("Response: ", response);
-          if (response) {
+          if (response==='Gotcha!') {
             trackButton.className = "buttonClicked";
             trackButton.style.background = "#1ecc07";
             trackButton.style.borderColor = "1ecc07";
             trackButton.style.fontSize = "16px";
             trackButton.style.color = "white";
+            state = 'tracked';
           }
           else console.log(`something went wrong`);
       });
     });
 }
+topList.appendChild(trackButton);
 trackButton.addEventListener('click',sendMessageToBackground);
-
-
-// chrome.runtime.onMessage.addListener(function (request,sender,sendResponse) {
-//   link = document.location.href;
-//   sendResponse({curUrl: link});
-//   alert(request)
-// },false);
-
-// const re = new RegExp('bear', 'gi')
-// const matches = document.documentElement.innerHTML.match(re) || []
-
-// chrome.runtime.sendMessage({
-//   url: window.location.href,
-//   count: matches.length
-// })

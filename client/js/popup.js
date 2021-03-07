@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log(`error occured ${err}`);
     }
   }
+  chrome.browserAction.setBadgeText({ text: '' });
   getFromStorage();
  
   

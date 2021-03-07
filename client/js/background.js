@@ -1,4 +1,6 @@
-var urlList = Object.keys(localStorage);
+var urlList = undefined;
+var value = null;
+chrome.storage.local.get(null,function (data){urlList = Object.keys(data)})
 var local_domain = 'http://localhost:5050/?url=';
 
 function fetchData(url) {
@@ -14,7 +16,8 @@ function fetchData(url) {
        }
  
        // Examine the text in the response
-       response.json().then(function(data) {
+        response.json().then(function (data) {
+         //to view fetched data
         //  console.log(data);
          resolve(data);
          // chrome.storage.local.get()
@@ -22,34 +25,91 @@ function fetchData(url) {
      }
    )
    .catch(function(err) {
-     console.log('Fetch Error :-S', err);
+    //  console.log('Fetch Error :-S', err);
      reject(err);
    });
   });
 }
 
-
+function getStatus(url) {
+  return new Promise(function(resolve, reject) {
+    chrome.storage.local.get(url, function(items) {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError.message);
+        reject(chrome.runtime.lastError.message);
+      } else {
+        resolve(items[url]);
+      }
+    });
+  });
+}
+function getFinal(data) {
+  return new Promise((resolve)=>{
+    if (data) {
+      value = 'tracked';
+    } else {
+      value = 'not tracked';
+    }
+    resolve(value);
+  })
+}
+const dealWithTracking = async (msg) => {
+  try {
+    const data = await getStatus(msg.url_to_check);
+    const val = await getFinal(data);
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {message: val});
+    });
+  } catch(err) {
+    console.log(err);
+  }
+  
+}
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     // console.log(msg);
+  // if (msg.url_to_check) {
+  //   var value = null;
+  //   console.log(`got here url_to_check = ${msg.url_to_check}`);
+  //   getStatus(msg.url_to_check)
+  //     .then((data) => {
+  //       if (data) {
+  //         console.log(data);
+  //         // return sendResponse('tracked');
+  //         value = 'tracked';
+  //       } else {
+  //         console.log(data);
+  //         // return sendResponse('not tracked');
+  //         value = 'not tracked';
+  //       }
+  //       console.log(value);
+  //       return sendResponse(value);
+  //     }).catch((error) => {
+  //       console.log(error);
+  //     })
+  // }
+    // chrome.storage.local.get(msg.url_to_check, function (status) {
+    //   console.log(`status = ${status[msg.url_to_check]}`);
+    //   if (status[msg.url_to_check] !== undefined) {
+    //     console.log('tracked');
+    //     value = 'tracked';   
+    //   }else { 
+    //     console.log('not tracked');
+    //     // return sendResponse({ state: 'not tracked' });
+    //     value = 'not tracked';
+    //   }
+    // })
+    // return sendResponse(value)
   if (msg.url_to_check) {
-    // console.log(`got here url_to_check = ${msg.url_to_check}`);
-    var state = localStorage.getItem(msg.url_to_check)
-      // console.log(state);
-        if (state) {
-          return sendResponse('tracked');
-        } else {
-          localStorage.setItem(msg.url_to_check,'tracked')
-          return sendResponse('not tracked');
-        }
-    } else {
-      var item = {};
-      var key = msg.url;
-      item[key] = msg;
-      chrome.storage.local.set(item, function () {
-      });
-      urlList = Object.keys(localStorage);
-      return sendResponse("Gotcha!");
+    dealWithTracking(msg);
     }    
+  else {
+    var item = {};
+    var key = msg.url;
+    item[key] = msg;
+    chrome.storage.local.set(item, function () {
+    });
+    return sendResponse("Gotcha!");
+  }    
 });
 
 
@@ -80,7 +140,30 @@ var i = 0;
 setInterval(() => {
   toDo(urlList[i]);
   i = (i + 1) % urlList.length;
- },30000)
+}, 30000)
+var trigger = function(){
+  chrome.browserAction.setBadgeText({text:'🔔'})
+}
 
+function logStorageChange(changes, area) {
+  // console.log("Change in storage area: " + area);
+  chrome.storage.local.get(null,function (data){urlList = Object.keys(data)})
+  let changedItems = Object.keys(changes);
+
+  for (let item of changedItems) {
+    // console.log(item + " has changed:");
+    // console.log("Old value: ");
+    // console.log(changes[item].oldValue);
+    // console.log("New value: ");
+    // console.log(changes[item].newValue);
+    if (!changes[item].oldValue) {
+      chrome.browserAction.setBadgeText({text:'🔔'})    
+    } else {
+      chrome.browserAction.setBadgeText({text:''})    
+    }
+  }
+}
+chrome.browserAction.setBadgeBackgroundColor({color:'red'})
+chrome.storage.local.onChanged.addListener(logStorageChange)
 // setInterval(toDo, 7000);
 // console.log(`urlList = ${urlList}`);
